@@ -1,0 +1,12 @@
+data/
+.venv/
+__pycache__/
+*.db
+results/
+models/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+*.parquet
+*.json
+.DS_Store
