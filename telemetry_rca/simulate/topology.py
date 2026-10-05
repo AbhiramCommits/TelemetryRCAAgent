@@ -18,6 +18,7 @@ def build_topology() -> tuple[list[tuple[str, str]], nx.DiGraph]:
         ("postgres-db", "storage-node"),
         ("redis-cache", "storage-node"),
         ("search-service", "kafka-cluster"),
+        ("auth-service", "kafka-cluster"),  # 13th edge to make 12 nodes
     ]
     graph = nx.DiGraph()
     graph.add_edges_from(edges)
