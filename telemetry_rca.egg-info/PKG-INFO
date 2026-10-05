@@ -1,0 +1,34 @@
+Metadata-Version: 2.4
+Name: telemetry_rca
+Version: 0.1.0
+Summary: Streaming observability system for network/service telemetry with root-cause analysis
+License: MIT
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: pydantic-settings>=2.0.0
+Requires-Dist: networkx>=3.0
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: pyarrow>=12.0.0
+Requires-Dist: numpy>=1.24.0
+Requires-Dist: confluent-kafka>=2.0.0
+Requires-Dist: kafka-python>=2.0.2
+Requires-Dist: pyspark>=3.4.0
+Requires-Dist: cassandra-driver>=3.25.0
+Requires-Dist: torch>=2.0.0
+Requires-Dist: langgraph>=0.0.20
+Requires-Dist: langchain-core>=0.1.0
+Requires-Dist: scikit-learn>=1.2.0
+Requires-Dist: scipy>=1.10.0
+Requires-Dist: tabulate>=0.9.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+
+# TelemetryRCAAgent
+
+Streaming observability system for network/service telemetry.
