@@ -26,5 +26,8 @@ jobs:
     - name: Run linter
       run: ruff check .
 
+    - name: Generate dataset
+      run: python scripts/gen_dataset.py --days 14 --faults 60 --seed 7
+
     - name: Run pytest
       run: pytest tests/

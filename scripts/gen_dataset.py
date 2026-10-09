@@ -37,7 +37,8 @@ def main() -> None:
     df_metrics.to_parquet(metrics_path, index=False)
     df_logs.to_parquet(logs_path, index=False)
     with open(labels_path, "w") as f:
-        json.dump(labels, f, indent=2)
+        # numpy scalars (e.g. int64 timestamps) are not JSON-serializable as-is
+        json.dump(labels, f, indent=2, default=lambda o: o.item())
 
     print(f"Done! Wrote {len(df_metrics)} metric rows to {metrics_path}")
     print(f"Wrote {len(df_logs)} log rows to {logs_path}")

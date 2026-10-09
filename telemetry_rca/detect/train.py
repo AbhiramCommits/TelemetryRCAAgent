@@ -1,22 +1,23 @@
 """Training script for temporal forecaster model."""
 
+import pickle
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import pandas as pd
-import numpy as np
-from pathlib import Path
-import pickle
 
-from telemetry_rca.detect.model import TemporalForecaster
 from telemetry_rca.detect.baseline import SeasonalBaseline
+from telemetry_rca.detect.model import TemporalForecaster
 from telemetry_rca.simulate.topology import get_entities
 
 
 def train_models(metrics_path: str = "data/metrics.parquet") -> None:
     print("Loading metrics for training...")
     df = pd.read_parquet(metrics_path)
-    
+
     # Train baseline
     print("Fitting seasonal baseline...")
     baseline = SeasonalBaseline()
@@ -30,7 +31,7 @@ def train_models(metrics_path: str = "data/metrics.parquet") -> None:
     # Train lightweight PyTorch model on entity groups
     entities = get_entities()
     metrics = ["cpu", "mem", "latency_p99", "error_rate", "throughput"]
-    
+
     # Pivot to wide format per entity: index ts, columns metrics
     print("Training PyTorch temporal forecasters...")
     torch.manual_seed(42)
@@ -40,7 +41,7 @@ def train_models(metrics_path: str = "data/metrics.parquet") -> None:
         ent_df = df[df.entity == entity].pivot(index="ts", columns="metric", values="value").dropna()
         if len(ent_df) < 100:
             continue
-        
+
         values = ent_df[metrics].values
         # Normalize
         mean = values.mean(axis=0)
@@ -48,18 +49,18 @@ def train_models(metrics_path: str = "data/metrics.parquet") -> None:
         norm_vals = (values - mean) / std
 
         # Create sliding windows of 60 steps -> 6 horizon
-        X, Y = [], []
+        xs, ys = [], []
         seq_len = 60
         horizon = 6
         for i in range(len(norm_vals) - seq_len - horizon):
-            X.append(norm_vals[i : i + seq_len])
-            Y.append(norm_vals[i + seq_len : i + seq_len + horizon])
+            xs.append(norm_vals[i : i + seq_len])
+            ys.append(norm_vals[i + seq_len : i + seq_len + horizon])
 
-        if not X:
+        if not xs:
             continue
 
-        X_t = torch.tensor(np.array(X), dtype=torch.float32)
-        Y_t = torch.tensor(np.array(Y), dtype=torch.float32)
+        x_t = torch.tensor(np.array(xs), dtype=torch.float32)
+        y_t = torch.tensor(np.array(ys), dtype=torch.float32)
 
         model = TemporalForecaster(input_dim=len(metrics), hidden_dim=16, horizon=horizon)
         optimizer = optim.Adam(model.parameters(), lr=0.01)
@@ -68,8 +69,8 @@ def train_models(metrics_path: str = "data/metrics.parquet") -> None:
         model.train()
         for epoch in range(3):  # quick training epochs
             optimizer.zero_grad()
-            preds = model(X_t[:500])  # batch sample
-            loss = criterion(preds, Y_t[:500])
+            preds = model(x_t[:500])  # batch sample
+            loss = criterion(preds, y_t[:500])
             loss.backward()
             optimizer.step()
 

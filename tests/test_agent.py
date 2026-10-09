@@ -1,11 +1,9 @@
 """Tests for LangGraph agent and graph execution bounds."""
 
-import pytest
-from telemetry_rca.store.sqlite_store import SQLiteStore
-from telemetry_rca.agent.graph import build_rca_graph
-from telemetry_rca.detect.detector import Anomaly
-from telemetry_rca.agent.runner import run_agent_for_anomalies
 from telemetry_rca.agent.report import render_incident_report
+from telemetry_rca.agent.runner import run_agent_for_anomalies
+from telemetry_rca.detect.detector import Anomaly
+from telemetry_rca.store.sqlite_store import SQLiteStore
 
 
 def test_agent_graph_execution():

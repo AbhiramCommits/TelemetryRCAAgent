@@ -1,20 +1,18 @@
 """LangGraph StateGraph for root-cause analysis with bounded retry loop."""
 
-import time
-from typing import TypedDict, List, Dict, Any
-from langgraph.graph import StateGraph, END
+from typing import Any, Dict, List, TypedDict
 
-from telemetry_rca.store.base import TelemetryStore
+from langgraph.graph import END, StateGraph
+
+from telemetry_rca.agent.llm import AnthropicLLM, RuleBasedLLM
 from telemetry_rca.agent.tools import (
-    get_entity_window,
     get_correlated_signals,
     get_dependency_path,
-    get_recent_incidents,
+    get_entity_window,
     get_log_template_spike,
 )
-from telemetry_rca.agent.llm import RuleBasedLLM, AnthropicLLM
 from telemetry_rca.config import settings
-from telemetry_rca.schema import Incident
+from telemetry_rca.store.base import TelemetryStore
 
 
 class AgentState(TypedDict):
@@ -42,7 +40,7 @@ def build_rca_graph(store: TelemetryStore) -> Any:
         windows = get_entity_window(store, ent, ts - 600, ts + 600)
         corr = get_correlated_signals(store, ent, ts)
         logs = get_log_template_spike(ent, ts)
-        
+
         state["evidence"].append({
             "type": "windows",
             "data_points": len(windows)

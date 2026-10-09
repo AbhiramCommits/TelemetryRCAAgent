@@ -4,10 +4,10 @@ import time
 import uuid
 from typing import List
 
-from telemetry_rca.store.base import TelemetryStore
 from telemetry_rca.agent.graph import build_rca_graph
-from telemetry_rca.schema import Incident
 from telemetry_rca.detect.detector import Anomaly
+from telemetry_rca.schema import Incident
+from telemetry_rca.store.base import TelemetryStore
 
 
 def run_agent_for_anomalies(store: TelemetryStore, anomalies: List[Anomaly]) -> List[Incident]:

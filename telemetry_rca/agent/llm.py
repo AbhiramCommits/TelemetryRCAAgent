@@ -1,7 +1,7 @@
 """LLM Client protocol, RuleBasedLLM, and AnthropicLLM."""
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 
 
 class LLMClient(ABC):

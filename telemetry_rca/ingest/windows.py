@@ -1,7 +1,8 @@
 """Pure-Python windowed aggregator for local mode and testing."""
 
+from typing import Any, Dict, List
+
 import pandas as pd
-from typing import List, Dict, Any
 
 
 def aggregate_windows(df_metrics: pd.DataFrame, window_size: int = 60) -> List[Dict[str, Any]]:

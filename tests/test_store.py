@@ -1,9 +1,9 @@
 """Tests for TelemetryStore interface conformance."""
 
-import pytest
 from pathlib import Path
+
+from telemetry_rca.schema import Incident, Window
 from telemetry_rca.store.sqlite_store import SQLiteStore
-from telemetry_rca.schema import Window, Incident
 
 
 def test_sqlite_store_conformance():

@@ -1,10 +1,12 @@
 """Cassandra store implementing TelemetryStore interface with wide-row reads."""
 
 import json
-from typing import List, Dict, Any
+from typing import Dict, List
+
 from cassandra.cluster import Cluster
+
+from telemetry_rca.schema import Incident, Window
 from telemetry_rca.store.base import TelemetryStore
-from telemetry_rca.schema import Window, Incident
 
 
 class CassandraStore(TelemetryStore):
@@ -69,12 +71,12 @@ class CassandraStore(TelemetryStore):
         day0 = self._get_day(t0)
         day1 = self._get_day(t1)
         days = set([day0, day1]) # simplified day span
-        
+
         query = self.session.prepare("""
             SELECT entity, ts_start, features FROM windows_by_entity
             WHERE entity = ? AND day = ? AND ts_start >= ? AND ts_start <= ?
         """)
-        
+
         result = []
         for day in days:
             rows = self.session.execute(query, (entity, day, t0, t1))
@@ -88,7 +90,6 @@ class CassandraStore(TelemetryStore):
         return result
 
     def write_incident(self, incident: Incident) -> None:
-        day = self._get_day(incident.ts)
         q1 = self.session.prepare("""
             INSERT INTO incidents_by_entity (entity, ts, id, score, hypothesis, evidence, latency_ms)
             VALUES (?, ?, ?, ?, ?, ?, ?)

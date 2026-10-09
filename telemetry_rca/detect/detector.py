@@ -2,13 +2,12 @@
 
 import pickle
 from pathlib import Path
+
 import numpy as np
 import pandas as pd
 import torch
 
-from telemetry_rca.detect.baseline import SeasonalBaseline
 from telemetry_rca.detect.model import TemporalForecaster
-from telemetry_rca.schema import Window
 from telemetry_rca.simulate.topology import get_entities
 
 

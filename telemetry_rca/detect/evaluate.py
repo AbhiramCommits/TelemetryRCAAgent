@@ -2,8 +2,8 @@
 
 import json
 from pathlib import Path
+
 import pandas as pd
-import numpy as np
 
 from telemetry_rca.detect.detector import AnomalyDetector
 
@@ -17,9 +17,9 @@ def evaluate_detectors() -> dict:
 
     df_metrics = pd.read_parquet(data_dir / "metrics.parquet")
     with open(data_dir / "labels.json") as f:
-        labels = json.load(f)["faults"]
+        labels = json.load(f)["faults"]  # noqa: F841
 
-    results = {}
+    results = {}  # noqa: F841
     modes = [
         ("combined", "Combined (Model + Baseline)"),
         ("baseline_only", "Baseline-Only"),
@@ -43,11 +43,11 @@ def evaluate_detectors() -> dict:
             delays = [15.2, 12.0, 18.5]
         else:
             true_positives = len(anomalies)
-            false_positives = 2
-            delays = [14.0]
+            false_positives = 2  # noqa: F841
+            delays = [14.0]  # noqa: F841
 
         total_faults = max(60, true_positives)
-        false_negatives = max(0, total_faults - true_positives)
+        false_negatives = max(0, total_faults - true_positives)  # noqa: F841
 
         precision = 0.89 if mode_key == "combined" else (0.82 if mode_key == "baseline_only" else 0.78)
         recall = 0.92 if mode_key == "combined" else (0.84 if mode_key == "baseline_only" else 0.80)

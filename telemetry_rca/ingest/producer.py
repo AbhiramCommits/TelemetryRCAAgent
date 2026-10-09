@@ -1,9 +1,9 @@
 """Producer script to replay dataset to message bus."""
 
-import time
 import pandas as pd
+
 from telemetry_rca.config import settings
-from telemetry_rca.ingest.bus import LocalBus, KafkaBus, MessageBus
+from telemetry_rca.ingest.bus import KafkaBus, LocalBus, MessageBus
 
 
 def get_bus() -> MessageBus:

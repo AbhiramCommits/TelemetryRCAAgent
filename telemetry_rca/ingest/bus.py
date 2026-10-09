@@ -1,10 +1,11 @@
 """Message bus interface and implementations (KafkaBus and LocalBus)."""
 
-from abc import ABC, abstractmethod
-from typing import Iterator, Optional
-import queue
 import json
-from confluent_kafka import Producer, Consumer, KafkaError
+import queue
+from abc import ABC, abstractmethod
+from typing import Iterator
+
+from confluent_kafka import Consumer, KafkaError, Producer
 
 
 class MessageBus(ABC):

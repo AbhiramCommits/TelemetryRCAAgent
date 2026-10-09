@@ -1,6 +1,7 @@
 """CLI script to run end-to-end evaluation."""
 
 import argparse
+
 from telemetry_rca.eval.harness import run_evaluation
 
 
