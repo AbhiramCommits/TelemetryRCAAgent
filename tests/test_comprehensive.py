@@ -1,14 +1,14 @@
 """Comprehensive pytest suite for TelemetryRCAAgent."""
 
-import pytest
-from telemetry_rca.simulate.topology import build_topology, get_entities
-from telemetry_rca.ingest.windows import aggregate_windows
-from telemetry_rca.store.sqlite_store import SQLiteStore
-from telemetry_rca.detect.baseline import SeasonalBaseline
-from telemetry_rca.agent.graph import build_rca_graph
-from telemetry_rca.schema import Window, Incident
-import pandas as pd
 import numpy as np
+import pandas as pd
+
+from telemetry_rca.agent.graph import build_rca_graph
+from telemetry_rca.detect.baseline import SeasonalBaseline
+from telemetry_rca.ingest.windows import aggregate_windows
+from telemetry_rca.schema import Window
+from telemetry_rca.simulate.topology import build_topology
+from telemetry_rca.store.sqlite_store import SQLiteStore
 
 
 def test_topology_dag():

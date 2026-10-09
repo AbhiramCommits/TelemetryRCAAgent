@@ -3,14 +3,14 @@
 import json
 import time
 from pathlib import Path
-import pandas as pd
-import numpy as np
 
-from telemetry_rca.store.sqlite_store import SQLiteStore
-from telemetry_rca.store.cassandra_store import CassandraStore
-from telemetry_rca.detect.detector import AnomalyDetector, Anomaly
+import pandas as pd
+
 from telemetry_rca.agent.runner import run_agent_for_anomalies
 from telemetry_rca.config import settings
+from telemetry_rca.detect.detector import Anomaly, AnomalyDetector
+from telemetry_rca.store.cassandra_store import CassandraStore
+from telemetry_rca.store.sqlite_store import SQLiteStore
 
 
 def run_evaluation(backend: str = "local") -> dict:

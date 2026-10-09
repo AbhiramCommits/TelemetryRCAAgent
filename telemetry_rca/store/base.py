@@ -1,8 +1,9 @@
 """Telemetry store interface."""
 
 from abc import ABC, abstractmethod
-from typing import List, Dict, Any
-from telemetry_rca.schema import Window, Incident
+from typing import Dict, List
+
+from telemetry_rca.schema import Incident, Window
 
 
 class TelemetryStore(ABC):

@@ -1,8 +1,9 @@
 """Tools for agent root-cause analysis."""
 
-from typing import List, Dict, Any
-from telemetry_rca.store.base import TelemetryStore
+from typing import Any, Dict, List
+
 from telemetry_rca.simulate.topology import build_topology
+from telemetry_rca.store.base import TelemetryStore
 
 
 def get_entity_window(store: TelemetryStore, entity: str, t0: int, t1: int) -> List[Dict[str, Any]]:
@@ -16,7 +17,7 @@ def get_correlated_signals(store: TelemetryStore, entity: str, ts: int) -> Dict[
     t0 = ts - 1800
     t1 = ts + 1800
     neighbors_data = store.read_neighbors_range(neighbors, t0, t1)
-    
+
     correlations = {}
     for n, windows in neighbors_data.items():
         if windows:

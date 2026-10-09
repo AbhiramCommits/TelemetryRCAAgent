@@ -19,7 +19,7 @@ class SeasonalBaseline:
             key = f"{entity}_{metric}"
             self.medians[key] = {}
             self.mads[key] = {}
-            
+
             bucket_grouped = group.groupby("bucket")["value"]
             meds = bucket_grouped.median()
             mads = bucket_grouped.apply(lambda x: np.median(np.abs(x - x.median())))

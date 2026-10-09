@@ -1,10 +1,11 @@
 """SQLite local fallback store implementing TelemetryStore interface."""
 
-import sqlite3
 import json
-from typing import List, Dict, Any
+import sqlite3
+from typing import Dict, List
+
+from telemetry_rca.schema import Incident, Window
 from telemetry_rca.store.base import TelemetryStore
-from telemetry_rca.schema import Window, Incident
 
 
 class SQLiteStore(TelemetryStore):

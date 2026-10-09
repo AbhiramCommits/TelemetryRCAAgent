@@ -1,9 +1,9 @@
 """Test suite for parity between pure Python windows and aggregation."""
 
 import pandas as pd
-import numpy as np
-from telemetry_rca.ingest.windows import aggregate_windows
+
 from telemetry_rca.ingest.spark_stream import run_spark_aggregation
+from telemetry_rca.ingest.windows import aggregate_windows
 
 
 def test_window_aggregation_parity():

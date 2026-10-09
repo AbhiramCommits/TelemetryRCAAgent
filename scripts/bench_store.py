@@ -1,13 +1,14 @@
 """Benchmark script for store performance and range reads."""
 
-import time
 import json
+import time
 from pathlib import Path
+
 import numpy as np
 from tabulate import tabulate
 
-from telemetry_rca.store.sqlite_store import SQLiteStore
 from telemetry_rca.schema import Window
+from telemetry_rca.store.sqlite_store import SQLiteStore
 
 
 def run_store_benchmark() -> dict:
@@ -19,11 +20,11 @@ def run_store_benchmark() -> dict:
     print("Ingesting 500k window rows into store...")
     entities = [f"entity-{i}" for i in range(10)]
     windows_batch = []
-    
+
     start_ts = 1710000000
     total_rows = 500000
     batch_size = 5000
-    
+
     t0_write = time.time()
     count = 0
     for i in range(total_rows):
@@ -41,7 +42,7 @@ def run_store_benchmark() -> dict:
     if windows_batch:
         store.write_windows(windows_batch)
         count += len(windows_batch)
-    
+
     write_duration = time.time() - t0_write
     write_throughput = total_rows / write_duration
 
